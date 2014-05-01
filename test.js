@@ -1,4 +1,6 @@
 
+process.env.NODE_ENV = 'test'
+
 var koa = require('koa')
 var request = require('supertest')
 
@@ -63,4 +65,22 @@ it('should show the status', function (done) {
     res.body.status.should.equal(404)
     done()
   })
+})
+
+it('should emit errors', function (done) {
+  var app = koa()
+  app.use(error())
+  app.use(function* () {
+    throw new Error('boom')
+  })
+
+  app.once('error', function (err) {
+    err.message.should.equal('boom')
+    err.status.should.equal(500)
+    done()
+  })
+
+  request(app.listen())
+  .get('/')
+  .expect(500, function () {})
 })
