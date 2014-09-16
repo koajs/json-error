@@ -1,10 +1,8 @@
 
-process.env.NODE_ENV = 'test'
-
 var koa = require('koa')
 var request = require('supertest')
 
-var error = require('./')
+var error = require('..')
 
 it('should show the stack', function (done) {
   var app = koa()
