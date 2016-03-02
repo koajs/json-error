@@ -1,7 +1,8 @@
+'use strict';
 
+var should = require('should')
 var koa = require('koa')
 var request = require('supertest')
-
 var error = require('..')
 
 it('should show the stack', function (done) {
@@ -15,7 +16,7 @@ it('should show the stack', function (done) {
   .expect(500, function (err, res) {
     if (err) return done(err)
     res.body.stack.should.be.ok
-    done()
+    return done()
   })
 })
 
@@ -30,7 +31,7 @@ it('should show the name', function (done) {
   .expect(500, function (err, res) {
     if (err) return done(err)
     res.body.name.should.equal('Error')
-    done()
+    return done()
   })
 })
 
@@ -45,7 +46,7 @@ it('should show the message', function (done) {
   .expect(500, function (err, res) {
     if (err) return done(err)
     res.body.message.should.equal('boom')
-    done()
+    return done()
   })
 })
 
@@ -61,7 +62,7 @@ it('should show the status', function (done) {
     if (err) return done(err)
     res.body.message.should.equal('Not Found')
     res.body.status.should.equal(404)
-    done()
+    return done()
   })
 })
 
@@ -75,10 +76,48 @@ it('should emit errors', function (done) {
   app.once('error', function (err) {
     err.message.should.equal('boom')
     err.status.should.equal(500)
-    done()
+    return done()
   })
 
   request(app.listen())
   .get('/')
   .expect(500, function () {})
+})
+
+it('should omit properties', function (done) {
+  var app = koa()
+  app.use(error({ omit: 'stack' }))
+  app.use(function* () {
+    throw new Error('boom')
+  })
+
+  request(app.listen())
+  .get('/')
+  .expect(500, function (err, res) {
+    if (err) return done(err)
+    res.body.message.should.equal('boom')
+    res.body.status.should.equal(500)
+    should(res.body.stack).be.undefined
+    return done()
+  })
+})
+
+it('should include properties', function (done) {
+  var app = koa()
+  app.use(error({ include: 'stack' }))
+  app.use(function* () {
+    throw new Error('boom')
+  })
+
+  request(app.listen())
+  .get('/')
+  .expect(500, function (err, res) {
+    if (err) return done(err)
+    res.body.status.should.equal(500)
+    res.body.stack.should.be.ok
+    should(res.body.name).be.undefined
+    should(res.body.message).be.undefined
+    should(res.body.type).be.undefined
+    return done()
+  })
 })

@@ -1,12 +1,8 @@
+'use strict';
+const Options = require('./options')
 
-var props = [
-  'name',
-  'message',
-  'stack',
-  'type',
-]
-
-module.exports = function () {
+module.exports = function (opts) {
+  var options = Options.from(opts);
   return function* jsonErrorHandler(next) {
     var status
     try {
@@ -29,7 +25,7 @@ module.exports = function () {
       Object.keys(err).forEach(function (key) {
         obj[key] = err[key]
       })
-      props.forEach(function (key) {
+      options.properties.forEach(function (key) {
         var value = err[key]
         if (value) obj[key] = value
       })
