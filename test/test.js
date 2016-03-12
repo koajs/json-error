@@ -70,6 +70,20 @@ it('should show the status', function (done) {
   })
 })
 
+it('should check for err.statusCode', function (done) {
+  var app = koa()
+  app.use(error())
+  app.use(function* () {
+    var err = new Error('boom')
+    err.statusCode = 501
+    throw err
+  })
+
+  request(app.listen())
+  .get('/')
+  .expect(501, done)
+})
+
 it('should emit errors', function (done) {
   var app = koa()
   app.use(error())

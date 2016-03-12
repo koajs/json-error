@@ -23,7 +23,7 @@ module.exports = function () {
       // set status
       status =
       this.response.status =
-      err.status = err.status || 500
+      err.status = err.status || err.statusCode || 500
 
       // set all properties of error onto the object
       Object.keys(err).forEach(function (key) {
