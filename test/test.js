@@ -1,6 +1,7 @@
 
-var koa = require('koa')
 var request = require('supertest')
+var assert = require('assert')
+var koa = require('koa')
 
 var error = require('..')
 
@@ -14,7 +15,8 @@ it('should show the stack', function (done) {
   .get('/')
   .expect(500, function (err, res) {
     if (err) return done(err)
-    res.body.stack.should.be.ok
+
+    assert(res.body)
     done()
   })
 })
@@ -29,7 +31,8 @@ it('should show the name', function (done) {
   .get('/')
   .expect(500, function (err, res) {
     if (err) return done(err)
-    res.body.name.should.equal('Error')
+
+    assert.equal('Error', res.body.name)
     done()
   })
 })
@@ -44,7 +47,8 @@ it('should show the message', function (done) {
   .get('/')
   .expect(500, function (err, res) {
     if (err) return done(err)
-    res.body.message.should.equal('boom')
+
+    assert.equal('boom', res.body.message)
     done()
   })
 })
@@ -59,8 +63,9 @@ it('should show the status', function (done) {
   .get('/')
   .expect(404, function (err, res) {
     if (err) return done(err)
-    res.body.message.should.equal('Not Found')
-    res.body.status.should.equal(404)
+
+    assert.equal('Not Found', res.body.message)
+    assert.equal(404, res.body.status)
     done()
   })
 })
@@ -73,8 +78,9 @@ it('should emit errors', function (done) {
   })
 
   app.once('error', function (err) {
-    err.message.should.equal('boom')
-    err.status.should.equal(500)
+    assert.equal('boom', err.message)
+    assert.equal(500, err.status)
+
     done()
   })
 
