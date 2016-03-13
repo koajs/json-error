@@ -24,5 +24,8 @@
   },
   "files": [
     "index.js"
-  ]
+  ],
+  "dependencies": {
+    "lodash.defaults": "^4.0.1"
+  }
 }
