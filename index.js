@@ -1,19 +1,42 @@
 'use strict';
+/**
+ * Error handler for pure-JSON Koa 2.0.0+ apps.
+ *
+ *```
+ * const Koa = require('koa');
+ * const error = require('koa-json-error')
+ *
+ * let app = new Koa();
+ * app.use(error());
+ *```
+ *
+ * @module koa-json-error
+ */
 const defaults = require('lodash.defaults');
 const assign = require('lodash.assign');
 
-const props = [
+/**
+ * Name of default attributes shown on errors.
+ * This attributes can be customized by setting a
+ * `format` function during middleware declaration.
+ * @type {Array}
+ */
+const DEFAULT_PROPERTIES = [
   'name',
   'message',
   'stack',
   'type'
 ];
 
+/**
+ * Default middleware configuration values.
+ * @type {Object}
+ */
 const DEFAULTS = {
   format: function(err) {
     // set all enumerable properties of error onto the object
     let obj = assign({}, err);
-    props.forEach(key => {
+    DEFAULT_PROPERTIES.forEach(key => {
       let value = err[key];
       if (value) obj[key] = value;
     });
@@ -27,29 +50,28 @@ const DEFAULTS = {
 module.exports = function(options) {
   options = defaults({}, options, DEFAULTS);
 
-  return function * jsonErrorHandler(next) {
+  return (ctx, next) => {
     let status;
-    try {
-      yield * next;
+    return next()
+      .then(() => {
+        status = ctx.status;
+        // future proof status
+        if (!status || (status === 404 && ctx.body == null)) {
+          ctx.throw(404);
+        }
+      })
+      .catch(err => {
+        // set body
+        ctx.body = options.format(err) || {};
 
-      status = this.response.status;
-      // future proof status
-      if (!status || (status === 404 && this.response.body == null)) {
-        this.throw(404);
-      }
-    } catch (err) {
-      // set body
-      this.response.body = options.format(err) || {};
+        // set status
+        status =
+          ctx.status = err.status || err.statusCode || 500;
 
-      // set status
-      status =
-        this.response.status =
-        err.status || err.statusCode || 500;
-
-      // emit the error if we really care
-      if (!err.expose && status >= 500) {
-        this.app.emit('error', err, this);
-      }
-    }
+        // emit the error if we really care
+        if (!err.expose && status >= 500) {
+          ctx.app.emit('error', err, ctx);
+        }
+      });
   };
 };
