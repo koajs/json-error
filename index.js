@@ -14,6 +14,7 @@
  */
 const defaults = require('lodash.defaults');
 const assign = require('lodash.assign');
+const compact = require('lodash.compact');
 
 /**
  * Name of default attributes shown on errors.
@@ -33,22 +34,40 @@ const DEFAULT_PROPERTIES = [
  * @type {Object}
  */
 const DEFAULTS = {
-  format: function(err) {
-    // set all enumerable properties of error onto the object
-    let obj = assign({}, err);
+  // Set all enumerable properties of error onto the object
+  preFormat: err => assign({}, err),
+  // Add default custom properties to final error object
+  format: function(err, obj) {
     DEFAULT_PROPERTIES.forEach(key => {
       let value = err[key];
-      if (value) obj[key] = value;
+      if (value) {
+        obj[key] = value;
+      }
     });
 
     obj.status = err.status || err.statusCode || 500;
 
     return obj;
-  }
+  },
+  // Final transformation after `options.format` (defaults to no op)
+  postFormat: null
 };
 
 module.exports = function(options) {
+  // Extend options with default values
   options = defaults({}, options, DEFAULTS);
+  const FORMATTER = compact([options.preFormat, options.format, options.postFormat]);
+
+  /**
+   * Apply all ordered formatting functions to original error.
+   * @param  {Error} err The thrown error.
+   * @return {Object}    The serializable formatted object.
+   */
+  function formatError(err) {
+    let res = {};
+    FORMATTER.forEach(f => res = f(err, res));
+    return res;
+  }
 
   return (ctx, next) => {
     let status;
@@ -61,14 +80,12 @@ module.exports = function(options) {
         }
       })
       .catch(err => {
-        // set body
-        ctx.body = options.format(err) || {};
-
-        // set status
+        // Format and set body
+        ctx.body = formatError(err) || {};
+        // Set status
         status =
           ctx.status = err.status || err.statusCode || 500;
-
-        // emit the error if we really care
+        // Emit the error if we really care
         if (!err.expose && status >= 500) {
           ctx.app.emit('error', err, ctx);
         }

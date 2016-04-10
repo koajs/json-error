@@ -13,13 +13,12 @@ describe('with default options', () => {
       throw new Error();
     });
     request(app.listen())
-    .get('/')
-    .expect(500, (err, res) => {
-      if (err) return done(err);
-
-      assert(res.body);
-      return done();
-    });
+      .get('/')
+      .expect(500, (err, res) => {
+        assert.ifError(err);
+        assert(res.body);
+        return done();
+      });
   });
 
   it('should show the name', done => {
@@ -29,13 +28,12 @@ describe('with default options', () => {
       throw new Error();
     });
     request(app.listen())
-    .get('/')
-    .expect(500, (err, res) => {
-      if (err) return done(err);
-
-      assert.equal('Error', res.body.name);
-      return done();
-    });
+      .get('/')
+      .expect(500, (err, res) => {
+        assert.ifError(err);
+        assert.equal('Error', res.body.name);
+        return done();
+      });
   });
 
   it('should show the message', done => {
@@ -45,14 +43,12 @@ describe('with default options', () => {
       throw new Error('boom');
     });
     request(app.listen())
-    .get('/')
-    .expect(500, (err, res) => {
-      if (err) {
-        return done(err);
-      }
-      assert.equal('boom', res.body.message);
-      return done();
-    });
+      .get('/')
+      .expect(500, (err, res) => {
+        assert.ifError(err);
+        assert.equal('boom', res.body.message);
+        return done();
+      });
   });
 
   it('should show the status', done => {
@@ -62,15 +58,13 @@ describe('with default options', () => {
       ctx.throw(404);
     });
     request(app.listen())
-    .get('/')
-    .expect(404, (err, res) => {
-      if (err) {
-        return done(err);
-      }
-      assert.equal('Not Found', res.body.message);
-      assert.equal(404, res.body.status);
-      return done();
-    });
+      .get('/')
+      .expect(404, (err, res) => {
+        assert.ifError(err);
+        assert.equal('Not Found', res.body.message);
+        assert.equal(404, res.body.status);
+        return done();
+      });
   });
 
   it('should check for err.statusCode', done => {
@@ -83,8 +77,8 @@ describe('with default options', () => {
     });
 
     request(app.listen())
-    .get('/')
-    .expect(501, done);
+      .get('/')
+      .expect(501, done);
   });
 
   it('should emit errors', done => {
@@ -101,8 +95,8 @@ describe('with default options', () => {
     });
 
     request(app.listen())
-    .get('/')
-    .expect(500, () => {});
+      .get('/')
+      .expect(500, () => {});
   });
 
   it('should throw 404 if no route matches', done => {
@@ -110,12 +104,12 @@ describe('with default options', () => {
     app.use(error());
 
     request(app.listen())
-    .get('/')
-    .expect(404, (err, res) => {
-      assert.equal('Not Found', res.body.message);
-      assert.equal(404, res.body.status);
-      return done(err);
-    });
+      .get('/')
+      .expect(404, (err, res) => {
+        assert.equal('Not Found', res.body.message);
+        assert.equal(404, res.body.status);
+        return done(err);
+      });
   });
 
   it('should throw 404 if status is set explicitly but response body is left empty', done => {
@@ -127,19 +121,21 @@ describe('with default options', () => {
     });
 
     request(app.listen())
-    .get('/')
-    .expect(404, (err, res) => {
-      assert.equal('Not Found', res.body.message);
-      assert.equal(404, res.body.status);
-      return done(err);
-    });
+      .get('/')
+      .expect(404, (err, res) => {
+        assert.equal('Not Found', res.body.message);
+        assert.equal(404, res.body.status);
+        return done(err);
+      });
   });
 });
 
-describe('with custom format function', () => {
-  it('should allow defining a format function', () => {
+describe('with custom options', () => {
+  it('should allow defining a pre, post and format functions', () => {
     let options = {
-      format: Function.prototype
+      preFormat: Function.prototype,
+      format: Function.prototype,
+      postFormat: Function.prototype
     };
 
     let app = new Koa();
@@ -168,14 +164,68 @@ describe('with custom format function', () => {
     });
 
     request(app.listen())
-    .get('/')
-    .expect(501, (err, res) => {
-      if (err) {
-        return done(err);
+      .get('/')
+      .expect(501, (err, res) => {
+        assert.ifError(err);
+        assert.equal('OK', res.body.message);
+        assert.equal(200, res.body.status);
+        return done();
+      });
+  });
+
+  it('should allow overriding of preFormat function', done => {
+    let options = {
+      preFormat: () => {
+        return {
+          status: -100,
+          message: 'ERROR'
+        };
       }
-      assert.equal('OK', res.body.message);
-      assert.equal(200, res.body.status);
-      return done();
+    };
+
+    let app = new Koa();
+    app.use(error(options));
+    app.use(() => {
+      let err = new Error('boom');
+      err.statusCode = 422;
+      err.customEnumerableField = 'fatal';
+      throw err;
     });
+
+    request(app.listen())
+      .get('/')
+      .expect(422, (err, res) => {
+        assert.ifError(err);
+        assert.equal(undefined, res.body.customEnumerableField);
+        assert.equal(422, res.body.status);
+        return done();
+      });
+  });
+
+  it('should allow overriding of postFormat function', done => {
+    let fixedError = {
+      status: -100,
+      message: 'ERROR'
+    };
+    let options = {
+      postFormat: () => fixedError
+    };
+
+    let app = new Koa();
+    app.use(error(options));
+    app.use(() => {
+      let err = new Error('boom');
+      err.statusCode = 502;
+      err.customEnumerableField = 'fatal';
+      throw err;
+    });
+
+    request(app.listen())
+      .get('/')
+      .expect(502, (err, res) => {
+        assert.ifError(err);
+        assert.deepEqual(fixedError, res.body);
+        return done();
+      });
   });
 });
