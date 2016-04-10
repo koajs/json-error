@@ -1,4 +1,3 @@
-
 # Koa JSON Error
 
 [![NPM version][npm-image]][npm-url]

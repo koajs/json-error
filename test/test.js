@@ -1,4 +1,4 @@
-
+'use strict';
 var request = require('supertest')
 var assert = require('assert')
 var koa = require('koa')
