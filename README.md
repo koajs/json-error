@@ -12,7 +12,7 @@ Error handler for pure JSON open-source apps where showing the stack trace is co
 ## API
 
 ```js
-var error = require('koa-json-error')
+const error = require('koa-json-error')
 
 app.use(error())
 ```
@@ -25,10 +25,10 @@ If you don't really feel that showing the stack trace is _that_ cool, you can cu
 
 ```js
 'use strict';
-var koa = require('koa');
-var error = require('koa-json-error');
+const koa = require('koa');
+const error = require('koa-json-error');
 
-var options = {
+let options = {
   format: function(err) {
     return {
       status: 200,
@@ -36,7 +36,7 @@ var options = {
     }
   }
 }
-var app = koa();
+let app = koa();
 app.use(error(options));
 ```
 
