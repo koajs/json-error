@@ -26,7 +26,7 @@ npm install --save koa-json-error
 const koa = require('koa');
 const error = require('koa-json-error')
 
-let app = koa();
+let app = new Koa();
 app.use(error())
 ```
 
@@ -49,7 +49,7 @@ let options = {
     }
   }
 }
-let app = koa();
+let app = new Koa();
 app.use(error(options));
 ```
 
