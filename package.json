@@ -1,6 +1,6 @@
 {
   "name": "koa-json-error",
-  "version": "1.0.2-dev",
+  "version": "2.0.0-dev",
   "description": "Error handler for pure-JSON apps",
   "keywords": [
     "koa",
@@ -29,9 +29,9 @@
   "main": "index.js",
   "repository": "koajs/json-error",
   "scripts": {
-    "test": "NODE_ENV=test mocha --harmony --reporter spec",
-    "test-cov": "NODE_ENV=test node --harmony ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
-    "test-travis": "NODE_ENV=test node --harmony ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report lcovonly"
+    "test": "NODE_ENV=test mocha --reporter spec",
+    "test-cov": "NODE_ENV=test node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
+    "test-travis": "NODE_ENV=test node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report lcovonly"
   },
   "dependencies": {
     "lodash.assign": "^4.0.7",
@@ -52,7 +52,7 @@
     "supertest": "1.2.0"
   },
   "engines": {
-    "node": ">=0.12.0"
+    "node": ">=4.0.0"
   },
   "pre-commit": "test"
 }
