@@ -9,18 +9,31 @@
 
 Error handler for pure JSON open-source apps where showing the stack trace is cool!
 
+```sh
+npm install --save koa-json-error
+```
+
+## Requirements
+- node `>=4.0.0`
+- koa `>=1.0.0`
+
+> Starting from version `2.0.0`, this package supports node `>4.0.0` _only_. If you need to use the handler on a project running on node `0.12` or less, please use `1.0.1`.
+
 ## API
 
 ```js
+'use strict';
+const koa = require('koa');
 const error = require('koa-json-error')
 
+let app = koa();
 app.use(error())
 ```
 
 ### Advanced usage
 You may pass in an `options` object as argument to the middleware. These are the available settings.
 
-#### `options.format(Function)`
+#### `options.format (Function)`
 If you don't really feel that showing the stack trace is _that_ cool, you can customize the way errors are shown on responses through a formatter function. It receives the raw error object and it is expected to return the formatted response.
 
 ```js
