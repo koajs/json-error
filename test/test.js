@@ -55,7 +55,7 @@ describe('with default options', () => {
     });
   });
 
-  it('should show the status', (done) => {
+  it('should show the status', done => {
     let app = koa();
     app.use(error());
     app.use(function * () {
@@ -103,6 +103,36 @@ describe('with default options', () => {
     request(app.listen())
     .get('/')
     .expect(500, () => {});
+  });
+
+  it('should throw 404 if no route matches', done => {
+    let app = koa();
+    app.use(error());
+
+    request(app.listen())
+    .get('/')
+    .expect(404, (err, res) => {
+      assert.equal('Not Found', res.body.message);
+      assert.equal(404, res.body.status);
+      return done(err);
+    });
+  });
+
+  it('should throw 404 if status is set explicitly but response body is left empty', done => {
+    let app = koa();
+    app.use(error());
+
+    app.use(function * () {
+      this.status = 404;
+    });
+
+    request(app.listen())
+    .get('/')
+    .expect(404, (err, res) => {
+      assert.equal('Not Found', res.body.message);
+      assert.equal(404, res.body.status);
+      return done(err);
+    });
   });
 });
 
