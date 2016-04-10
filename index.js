@@ -10,12 +10,9 @@ var props = [
 
 var DEFAULTS = {
   format: function(err) {
-    var obj = {}
-
     // set all enumerable properties of error onto the object
-    Object.keys(err).forEach(function (key) {
-      obj[key] = err[key]
-    })
+    var obj =  Object.assign({}, err)
+
     props.forEach(function (key) {
       var value = err[key]
       if (value) obj[key] = value
