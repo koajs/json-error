@@ -1,15 +1,42 @@
 {
   "name": "koa-json-error",
+  "version": "1.0.2-dev",
   "description": "Error handler for pure-JSON apps",
-  "version": "1.0.1",
+  "keywords": [
+    "koa",
+    "json",
+    "error",
+    "api",
+    "handler",
+    "middleware"
+  ],
+  "bugs": {
+    "url": "https://github.com/koajs/json-error/issues"
+  },
+  "license": "MIT",
   "author": {
     "name": "Jonathan Ong",
     "email": "me@jongleberry.com",
     "url": "http://jongleberry.com",
     "twitter": "https://twitter.com/jongleberry"
   },
-  "license": "MIT",
+  "contributors": [
+    "Nicolás Fantone <nfantone@gmail.com> (https://github.com/nfantone)"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "main": "index.js",
   "repository": "koajs/json-error",
+  "scripts": {
+    "test": "NODE_ENV=test mocha --harmony --reporter spec",
+    "test-cov": "NODE_ENV=test node --harmony ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
+    "test-travis": "NODE_ENV=test node --harmony ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report lcovonly"
+  },
+  "dependencies": {
+    "lodash.assign": "^4.0.7",
+    "lodash.defaults": "^4.0.1"
+  },
   "devDependencies": {
     "codecov": "^1.0.1",
     "istanbul": "^0.4.2",
@@ -17,16 +44,7 @@
     "mocha": "^2.0.0",
     "supertest": "^1.0.0"
   },
-  "scripts": {
-    "test": "NODE_ENV=test mocha --harmony --reporter spec",
-    "test-cov": "NODE_ENV=test node --harmony ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
-    "test-travis": "NODE_ENV=test node --harmony ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report lcovonly"
+  "engines": {
+    "node": ">=0.12.0"
   },
-  "files": [
-    "index.js"
-  ],
-  "dependencies": {
-    "lodash.assign": "^4.0.7",
-    "lodash.defaults": "^4.0.1"
-  }
 }
