@@ -7,17 +7,20 @@
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
 
-Error handler for pure JSON open-source apps where showing the stack trace is cool!
+Error handler for pure [Koa](https://koajs.com) 2.0.0+ JSON apps where showing the stack trace is _cool!_
 
 ```sh
-npm install --save koa-json-error
+npm install --save koa-json-error@next
 ```
+
+This is the `next` release, aimed at supporting Koa v2 promise-based middlewares. _Use any of the numbered tagged versions for v1 support_.
 
 ## Requirements
 - node `>=4.0.0`
-- koa `>=1.0.0`
+- koa `>=2.0.0`
 
-> Starting from version `2.0.0`, this package supports node `>4.0.0` _only_. If you need to use the handler on a project running on node `0.12` or less, please use `1.0.1`.
+> Starting from `koa-json-error@2.0.0`, this package supports node `>4.0.0` _only_. If you need to use the handler on a project running on node `0.12` or less, please use `1.0.1`.
+
 
 ## API
 
@@ -34,7 +37,7 @@ app.use(error())
 You may pass in an `options` object as argument to the middleware. These are the available settings.
 
 #### `options.format (Function)`
-If you don't really feel that showing the stack trace is _that_ cool, you can customize the way errors are shown on responses through a formatter function. It receives the raw error object and it is expected to return the formatted response.
+If you don't really feel that showing the stack trace is _that_ cool, you can customize the way errors are shown on responses through a formatter function. It receives the raw error object and it is expected to return the formatted response. This allows for different formats on various environments.
 
 ```js
 'use strict';
@@ -44,8 +47,9 @@ const error = require('koa-json-error');
 let options = {
   format: function(err) {
     return {
-      status: 200,
-      message: err.message || 'OK';
+      status: 100,
+      message: err.message || 'OK',
+      description: 'Custom extended description'
     }
   }
 }
