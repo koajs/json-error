@@ -1,5 +1,6 @@
 
 var defaults = require('lodash.defaults');
+var assign = require('lodash.assign');
 
 var props = [
   'name',
@@ -11,7 +12,7 @@ var props = [
 var DEFAULTS = {
   format: function(err) {
     // set all enumerable properties of error onto the object
-    var obj =  Object.assign({}, err)
+    var obj =  assign({}, err)
 
     props.forEach(function (key) {
       var value = err[key]

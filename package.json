@@ -26,6 +26,7 @@
     "index.js"
   ],
   "dependencies": {
+    "lodash.assign": "^4.0.7",
     "lodash.defaults": "^4.0.1"
   }
 }
