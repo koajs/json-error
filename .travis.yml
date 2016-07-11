@@ -4,5 +4,26 @@ node_js:
 - '6'
 sudo: false
 language: node_js
+branches:
+  only:
+  - master
+  - develop
+  - /^v?(\d\.){2}\d$/
+notifications:
+  email:
+  - nfantone@gmail.com
+cache:
+  bundler: true
+  directories:
+  - node_modules
 script:
 - npm run test-travis
+deploy:
+  provider: npm
+  email: nfantone@gmail.com
+  api_key:
+    secure: IP/K3L57ZhIVFU4vcmg3JV/WGcrhrihF/Xs8QyiQ4OxqERqakHflCbPiBWooCFT+I6wdSsjnJqjZuMp3T05LLnpC602TYm7zwgcT0bnatLYx9hK8tuXw29IJP9jjttBqQPcUAV2ZvLiZ2/EXzwdk//ClFVPQ81KCA4aWQMnQR7A=
+  on:
+    tags: true
+    repo: koajs/json-error
+    node_js: '4'
