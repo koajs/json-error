@@ -30,26 +30,26 @@
   "repository": "koajs/json-error",
   "scripts": {
     "test": "NODE_ENV=test mocha --reporter spec",
-    "test-cov": "NODE_ENV=test node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
-    "test-travis": "NODE_ENV=test node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report lcovonly"
+    "test-cov": "NODE_ENV=test istanbul cover mocha",
+    "test-travis": "NODE_ENV=test istanbul cover mocha --report lcovonly && codecov"
   },
   "dependencies": {
-    "lodash.assign": "^4.0.7",
+    "lodash.assign": "^4.0.9",
     "lodash.compact": "^3.0.1",
     "lodash.defaults": "^4.0.1"
   },
   "devDependencies": {
-    "babel-eslint": "^6.0.2",
+    "eslint": "^2.13.1",
+    "babel-eslint": "^6.1.2",
     "codecov": "^1.0.1",
-    "eslint": "^2.7.0",
-    "eslint-config-standard": "^5.1.0",
-    "eslint-plugin-babel": "^3.2.0",
-    "eslint-plugin-promise": "^1.1.0",
+    "eslint-config-standard": "^5.3.1",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-promise": "^1.3.2",
     "eslint-plugin-standard": "^1.3.2",
-    "istanbul": "^0.4.3",
+    "istanbul": "^0.4.4",
     "koa": "^2.0.0",
     "mocha": "2.5.3",
-    "pre-commit": "^1.1.2",
+    "pre-commit": "^1.1.3",
     "supertest": "1.2.0"
   },
   "engines": {
