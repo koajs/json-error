@@ -39,7 +39,7 @@
     "lodash.defaults": "^4.0.1"
   },
   "devDependencies": {
-    "eslint": "^2.13.1",
+    "eslint": "^3.1.1",
     "babel-eslint": "^6.1.2",
     "codecov": "^1.0.1",
     "eslint-config-standard": "^5.3.1",
