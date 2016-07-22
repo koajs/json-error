@@ -10,10 +10,10 @@
 Error handler for pure [Koa](https://koajs.com) 2.0.0+ JSON apps where showing the stack trace is _cool!_
 
 ```sh
-npm install --save koa-json-error@next
+npm install --save koa-json-error
 ```
 
-This is the `next` release, aimed at supporting Koa v2 promise-based middlewares. _Use any of the numbered tagged versions for v1 support_.
+Versions 3.0.0 and up support Koa 2.0.0+. For earlier versions of Koa, _please use previous releases_.
 
 ## Requirements
 - node `>=4.0.0`

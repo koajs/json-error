@@ -1,5 +1,4 @@
 node_js:
-- '4'
 - '5'
 - '6'
 sudo: false
@@ -8,7 +7,7 @@ branches:
   only:
   - master
   - develop
-  - /^v?(\d\.){2}\d$/
+  - "/^v?(\\d\\.){2}\\d$/"
 notifications:
   email:
   - nfantone@gmail.com
@@ -17,13 +16,13 @@ cache:
   directories:
   - node_modules
 script:
-- npm run test-travis
+- npm run lint && npm run test-travis
 deploy:
   provider: npm
   email: nfantone@gmail.com
   api_key:
-    secure: IP/K3L57ZhIVFU4vcmg3JV/WGcrhrihF/Xs8QyiQ4OxqERqakHflCbPiBWooCFT+I6wdSsjnJqjZuMp3T05LLnpC602TYm7zwgcT0bnatLYx9hK8tuXw29IJP9jjttBqQPcUAV2ZvLiZ2/EXzwdk//ClFVPQ81KCA4aWQMnQR7A=
+    secure: gI4rGcA+YExiQk7JTg/EDlb6nD+W34bp/Eit0YYwafBstmj49YeDrZDkmq0aii5hcXeiJTvkbB78R09LPTeCKGacUJRpuXs3yhGEMYoNCWlwSMI7WIUTZ1ZmDm59sAPDxyIbrnvxclPR7foeC5+yZV2ob6pcOrZ85bctyJgTCSU=
   on:
     tags: true
     repo: koajs/json-error
-    node_js: '4'
+    node_js: '5'
