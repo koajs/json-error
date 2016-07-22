@@ -1,8 +1,28 @@
 node_js:
-- "4"
-- "5"
+- '5'
+- '6'
 sudo: false
 language: node_js
+branches:
+  only:
+  - master
+  - develop
+  - "/^v?(\\d\\.){2}\\d$/"
+notifications:
+  email:
+  - nfantone@gmail.com
+cache:
+  bundler: true
+  directories:
+  - node_modules
 script:
-- npm run test-travis
-- ./node_modules/.bin/codecov
+- npm run lint && npm run test-travis
+deploy:
+  provider: npm
+  email: nfantone@gmail.com
+  api_key:
+    secure: gI4rGcA+YExiQk7JTg/EDlb6nD+W34bp/Eit0YYwafBstmj49YeDrZDkmq0aii5hcXeiJTvkbB78R09LPTeCKGacUJRpuXs3yhGEMYoNCWlwSMI7WIUTZ1ZmDm59sAPDxyIbrnvxclPR7foeC5+yZV2ob6pcOrZ85bctyJgTCSU=
+  on:
+    tags: true
+    repo: koajs/json-error
+    node_js: '5'
