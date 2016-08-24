@@ -35,19 +35,19 @@
     "test-travis": "NODE_ENV=test istanbul cover _mocha --report lcovonly && codecov"
   },
   "dependencies": {
-    "lodash.assign": "^4.0.9",
+    "lodash.assign": "^4.2.0",
     "lodash.compact": "^3.0.1",
-    "lodash.defaults": "^4.0.1"
+    "lodash.defaults": "^4.2.0"
   },
   "devDependencies": {
-    "eslint": "^3.1.1",
+    "eslint": "^3.3.1",
     "babel-eslint": "^6.1.2",
     "codecov": "^1.0.1",
-    "eslint-config-standard": "^5.3.5",
+    "eslint-config-standard": "^6.0.0",
     "eslint-plugin-babel": "^3.3.0",
-    "eslint-plugin-promise": "^2.0.0",
+    "eslint-plugin-promise": "^2.0.1",
     "eslint-plugin-standard": "^2.0.0",
-    "istanbul": "^0.4.4",
+    "istanbul": "^0.4.5",
     "koa": "^2.0.0",
     "mocha": "3.0.2",
     "pre-commit": "^1.1.3",
