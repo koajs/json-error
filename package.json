@@ -40,10 +40,10 @@
     "lodash.defaults": "^4.2.0"
   },
   "devDependencies": {
-    "eslint": "^3.3.1",
+    "eslint": "^3.5.0",
     "babel-eslint": "^6.1.2",
     "codecov": "^1.0.1",
-    "eslint-config-standard": "^6.0.0",
+    "eslint-config-standard": "^6.0.1",
     "eslint-plugin-babel": "^3.3.0",
     "eslint-plugin-promise": "^2.0.1",
     "eslint-plugin-standard": "^2.0.0",
