@@ -1,5 +1,5 @@
 node_js:
-- '5'
+- '4'
 - '6'
 sudo: false
 language: node_js
@@ -26,4 +26,4 @@ deploy:
   on:
     tags: true
     repo: koajs/json-error
-    node_js: '5'
+    node_js: '6'
