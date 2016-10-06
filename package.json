@@ -35,7 +35,6 @@
     "test-travis": "NODE_ENV=test istanbul cover _mocha --report lcovonly && codecov"
   },
   "dependencies": {
-    "lodash.assign": "^4.2.0",
     "lodash.compact": "^3.0.1",
     "lodash.defaults": "^4.2.0"
   },

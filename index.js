@@ -13,7 +13,6 @@
  * @module koa-json-error
  */
 const defaults = require('lodash.defaults');
-const assign = require('lodash.assign');
 const compact = require('lodash.compact');
 
 /**
@@ -35,7 +34,7 @@ const DEFAULT_PROPERTIES = [
  */
 const DEFAULTS = {
   // Set all enumerable properties of error onto the object
-  preFormat: err => assign({}, err),
+  preFormat: err => Object.assign({}, err),
   // Add default custom properties to final error object
   format: function(err, obj) {
     DEFAULT_PROPERTIES.forEach(key => {
