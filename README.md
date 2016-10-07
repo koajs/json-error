@@ -59,9 +59,14 @@ const DEFAULT_PROPERTIES = [
   'name',
   'message',
   'stack',
-  'type',
-  'status'
+  'type'
 ];
+```
+
+It also defines a `status` property like so:
+
+```js
+obj.status = err.status || err.statusCode || 500;
 ```
 
 #### `options.postFormat (Function)`
