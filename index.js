@@ -14,6 +14,7 @@
  */
 const defaults = require('lodash.defaults');
 const compact = require('lodash.compact');
+const isFunction = require('lodash.isfunction');
 
 /**
  * Name of default attributes shown on errors.
@@ -53,8 +54,18 @@ const DEFAULTS = {
 };
 
 module.exports = function(options) {
+  if (isFunction(options)) {
+    // If a function is passed as an argument, treat it
+    // like a `format` function, with no `preFormat`.
+    options = {
+      preFormat: null,
+      format: options
+    };
+  }
+
   // Extend options with default values
   options = defaults({}, options, DEFAULTS);
+
   const FORMATTER = compact([options.preFormat, options.format, options.postFormat]);
 
   /**
