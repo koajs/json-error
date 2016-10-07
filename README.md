@@ -33,10 +33,39 @@ let app = new Koa();
 app.use(error())
 ```
 
-### Advanced usage
-If you don't really feel that showing the stack trace is _that_ cool, you can customize the way errors are shown on responses through a series of formatter functions. They receive the raw error object and return a formatted response. This gives you fine-grained control over the final output and allows for different formats on various environments.
+If you don't really feel that showing the stack trace is _that_ cool, you can customize the way errors are shown on responses. There's a **basic** and more **advanced**, granular approach at this.
 
-You may pass in an `options` object as argument to the middleware. These are the available settings.
+### Basic usage
+You can provide a _single formatter function_ as an argument on middleware initialization. It receives the original raised error and it is expected to return a formatted response.
+
+Here's a simple example:
+
+```js
+'use strict';
+const koa = require('koa');
+const error = require('koa-json-error')
+
+function formatError(err) {
+    return {
+        // Copy some attributes from
+        // the original error
+        status: err.status,
+        message: err.message,
+
+        // ...or add some custom ones
+        success: false,
+        reason: 'Unexpected'
+    }
+}
+
+let app = new Koa();
+app.use(error(formatError));
+```
+
+### Advanced usage
+You can also customize errors on responses through a series of _three formatter functions_, specified in an `options` object. They receive the raw error object and return a formatted response. This gives you fine-grained control over the final output and allows for different formats on various environments.
+
+You may pass in the `options` object as argument to the middleware. These are the available settings.
 
 #### `options.preFormat (Function)`
 Perform some task before calling `options.format`. Must be a function with the original `err` as its only argument.
