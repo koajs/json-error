@@ -7,7 +7,7 @@ branches:
   only:
   - master
   - develop
-  - /^v?(\\d\\.){2}\\d$/
+  - /^v?(\d\.){2}\d$/
 notifications:
   email:
   - nfantone@gmail.com
