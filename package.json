@@ -1,6 +1,6 @@
 {
   "name": "koa-json-error",
-  "version": "3.0.3-dev",
+  "version": "3.1.0",
   "description": "Error handler for pure-JSON Koa apps",
   "keywords": [
     "koa",
