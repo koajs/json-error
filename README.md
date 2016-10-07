@@ -7,19 +7,19 @@
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
 
-Error handler for pure [Koa](https://koajs.com) 2.0.0+ JSON apps where showing the stack trace is _cool!_
+Error handler for pure [Koa](https://koajs.com) `>=2.0.0` JSON apps where showing the stack trace is _cool!_
 
 ```sh
 npm install --save koa-json-error
 ```
 
-Versions 3.0.0 and up support Koa 2.0.0+. For earlier versions of Koa, _please use previous releases_.
+> Versions `>=3.0.0` support Koa `^2.0.0`. For earlier versions of Koa, _please use previous releases_.
 
 ## Requirements
 - node `>=4.0.0`
 - koa `>=2.0.0`
 
-> Starting from `koa-json-error@2.0.0`, this package supports node `>4.0.0` _only_. If you need to use the handler on a project running on node `0.12` or less, please use `1.0.1`.
+> Starting from `2.0.0`, this package supports node `>=4.0.0` _only_. If you need to use the handler on a project running on node `0.12` or less, please use `1.0.1`.
 
 
 ## API
@@ -43,8 +43,8 @@ Perform some task before calling `options.format`. Must be a function with the o
 
 Defaults to:
 
-```javascript
-err => _.assign({}, err) // lodash _.assign
+```js
+(err) => Object.assign({}, err)
 ```
 
 Which sets all enumerable properties of `err` onto the formatted object.
@@ -54,7 +54,7 @@ Runs inmediatly after `options.preFormat`. It receives two arguments: the origin
 
 Defaults to adding the following non-enumerable properties to the output:
 
-```javascript
+```js
 const DEFAULT_PROPERTIES = [
   'name',
   'message',
@@ -72,7 +72,7 @@ The default is a no-op (final output is defined by `options.format`).
 This option is useful when you want to preserve the default functionality and extend it in some way.
 
 For example,
-```javascript
+```js
 'use strict';
 const _ = require('lodash');
 const koa = require('koa');
