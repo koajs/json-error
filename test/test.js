@@ -201,30 +201,43 @@ describe('with custom options', () => {
         return done();
       });
   });
+});
 
-  it('should allow overriding of postFormat function', done => {
-    let fixedError = {
-      status: -100,
-      message: 'ERROR'
-    };
-    let options = {
-      postFormat: () => fixedError
+describe('with a format function as options', () => {
+  it('should allow passing a function as argument', done => {
+    let app = new Koa();
+    assert.doesNotThrow(() => {
+      app.use(error(Function.prototype));
+      return done();
+    });
+  });
+
+  it('should behave as if preFormat and postFormat were no-ops', done => {
+    let options = err => {
+      return {
+        why: err.reason,
+        status: err.status || -200
+      };
     };
 
     let app = new Koa();
     app.use(error(options));
     app.use(() => {
       let err = new Error('boom');
-      err.statusCode = 502;
-      err.customEnumerableField = 'fatal';
+      err.reason = 'Not 42';
+      err.customEnumerableField = 'fail';
       throw err;
     });
 
     request(app.listen())
       .get('/')
-      .expect(502, (err, res) => {
+      .expect(500, (err, res) => {
         assert.ifError(err);
-        assert.deepEqual(fixedError, res.body);
+        assert.deepEqual({
+          status: -200,
+          why: 'Not 42'
+        }, res.body);
+        assert.equal(undefined, res.body.customEnumerableField);
         return done();
       });
   });
