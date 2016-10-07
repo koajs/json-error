@@ -62,6 +62,19 @@ let app = new Koa();
 app.use(error(formatError));
 ```
 
+This basic configuration is essentially the same (and serves as a shorthand for) the following:
+
+```js
+'use strict';
+let app = new Koa();
+app.use(error({
+    preFormat: null,
+    format: formatError
+}));
+```
+
+See section below.
+
 ### Advanced usage
 You can also customize errors on responses through a series of _three formatter functions_, specified in an `options` object. They receive the raw error object and return a formatted response. This gives you fine-grained control over the final output and allows for different formats on various environments.
 
