@@ -14,7 +14,6 @@
  */
 const defaults = require('lodash.defaults');
 const compact = require('lodash.compact');
-const isFunction = require('lodash.isfunction');
 
 /**
  * Name of default attributes shown on errors.
