@@ -54,7 +54,7 @@ const DEFAULTS = {
 };
 
 module.exports = function(options) {
-  if (isFunction(options)) {
+  if (typeof options === 'function') {
     // If a function is passed as an argument, treat it
     // like a `format` function, with no `preFormat`.
     options = {

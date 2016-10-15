@@ -36,8 +36,7 @@
   },
   "dependencies": {
     "lodash.compact": "^3.0.1",
-    "lodash.defaults": "^4.2.0",
-    "lodash.isfunction": "^3.0.8"
+    "lodash.defaults": "^4.2.0"
   },
   "devDependencies": {
     "eslint": "^3.5.0",
