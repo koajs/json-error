@@ -12,7 +12,6 @@
  *
  * @module koa-json-error
  */
-const defaults = require('lodash.defaults');
 const compact = require('lodash.compact');
 
 /**
@@ -63,7 +62,7 @@ module.exports = function(options) {
   }
 
   // Extend options with default values
-  options = defaults({}, options, DEFAULTS);
+  options = Object.assign({}, DEFAULTS, options);
 
   const FORMATTER = compact([options.preFormat, options.format, options.postFormat]);
 
