@@ -1,6 +1,6 @@
 node_js:
-- '4'
 - '6'
+- '7'
 sudo: false
 language: node_js
 branches:
@@ -17,7 +17,7 @@ cache:
   - node_modules
 before_install: npm i -g npm
 script:
-- npm run lint && npm run test-travis
+- npm run ci
 deploy:
   provider: npm
   email: nfantone@gmail.com
@@ -26,4 +26,4 @@ deploy:
   on:
     tags: true
     repo: koajs/json-error
-    node_js: '6'
+    node_js: '7'
