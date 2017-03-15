@@ -33,7 +33,7 @@
     "test": "NODE_ENV=test mocha --reporter spec",
     "coverage": "nyc npm run test",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
-    "validate": "npm-run-all lint test",
+    "validate": "npm-run-all lint coverage",
     "ci": "npm-run-all validate report-coverage"
   },
   "dependencies": {
