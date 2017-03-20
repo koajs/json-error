@@ -37,7 +37,8 @@
     "ci": "npm-run-all validate report-coverage"
   },
   "dependencies": {
-    "lodash.compact": "^3.0.1"
+    "lodash.compact": "^3.0.1",
+    "lodash.curry": "^4.1.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",

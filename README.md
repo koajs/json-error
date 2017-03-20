@@ -16,10 +16,10 @@ npm install --save koa-json-error
 > Versions `>=3.0.0` support Koa `^2.0.0`. For earlier versions of Koa, _please use previous releases_.
 
 ## Requirements
-- node `>=4.0.0`
-- koa `>=2.0.0`
+- node `>=6.0.0`
+- koa `>=2.2.0`
 
-> Starting from `2.0.0`, this package supports node `>=4.0.0` _only_. If you need to use the handler on a project running on node `0.12` or less, please use `1.0.1`.
+> Starting from `3.2.0`, this package supports node `>=6.0.0` to match [Koa requirements][koa-requirements].
 
 
 ## API
@@ -33,7 +33,7 @@ let app = new Koa();
 app.use(error())
 ```
 
-If you don't really feel that showing the stack trace is _that_ cool, you can customize the way errors are shown on responses. There's a **basic** and more **advanced**, granular approach at this.
+If you don't really feel that showing the stack trace is _that_ cool, you can customize the way errors are shown on responses. There's a **basic** and more **advanced**, granular approach to this.
 
 ### Basic usage
 You can provide a _single formatter function_ as an argument on middleware initialization. It receives the original raised error and it is expected to return a formatted response.
@@ -147,3 +147,5 @@ app.use(error(options));
 [license-url]: LICENSE
 [downloads-image]: http://img.shields.io/npm/dm/koa-json-error.svg?style=flat-square
 [downloads-url]: https://npmjs.org/package/koa-json-error
+[koa-requirements]: https://github.com/koajs/koa/blob/master/package.json#L61
+
