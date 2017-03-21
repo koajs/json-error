@@ -24,7 +24,8 @@
     "Jonathan Ong <me@jongleberry.com> (http://jongleberry.com)"
   ],
   "files": [
-    "index.js"
+    "index.js",
+    "lib/"
   ],
   "main": "index.js",
   "repository": "koajs/json-error",
