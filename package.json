@@ -1,6 +1,6 @@
 {
   "name": "koa-json-error",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Error handler for pure-JSON Koa apps",
   "keywords": [
     "koa",
@@ -15,13 +15,13 @@
   },
   "license": "MIT",
   "author": {
-    "name": "Jonathan Ong",
-    "email": "me@jongleberry.com",
-    "url": "http://jongleberry.com",
-    "twitter": "https://twitter.com/jongleberry"
+    "name": "Nicolás Fantone",
+    "email": "nfantone@gmail.com",
+    "url": "https://github.com/nfantone",
+    "twitter": "https://twitter.com/nfantone"
   },
   "contributors": [
-    "Nicolás Fantone <nfantone@gmail.com> (https://github.com/nfantone)"
+    "Jonathan Ong <me@jongleberry.com> (http://jongleberry.com)"
   ],
   "files": [
     "index.js"
@@ -29,32 +29,34 @@
   "main": "index.js",
   "repository": "koajs/json-error",
   "scripts": {
-    "lint": "eslint *.js",
+    "lint": "eslint *.js test/",
     "test": "NODE_ENV=test mocha --reporter spec",
-    "test-cov": "NODE_ENV=test istanbul cover _mocha",
-    "test-travis": "NODE_ENV=test istanbul cover _mocha --report lcovonly && codecov"
+    "coverage": "nyc npm run test",
+    "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
+    "validate": "npm-run-all lint coverage",
+    "ci": "npm-run-all validate report-coverage"
   },
   "dependencies": {
     "lodash.compact": "^3.0.1",
-    "lodash.defaults": "^4.2.0",
-    "lodash.isfunction": "^3.0.8"
+    "lodash.curry": "^4.1.1"
   },
   "devDependencies": {
-    "eslint": "^3.5.0",
-    "babel-eslint": "^7.0.0",
-    "codecov": "^1.0.1",
-    "eslint-config-standard": "^6.0.1",
-    "eslint-plugin-babel": "^3.3.0",
-    "eslint-plugin-promise": "^2.0.1",
-    "eslint-plugin-standard": "^2.0.0",
-    "istanbul": "^0.4.5",
-    "koa": "^2.0.0",
-    "mocha": "3.1.0",
-    "pre-commit": "^1.1.3",
-    "supertest": "2.0.0"
+    "babel-eslint": "^7.1.1",
+    "codecov": "^2.0.1",
+    "eslint": "^3.17.1",
+    "eslint-config-standard": "^7.0.1",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^2.1.1",
+    "koa": "^2.2.0",
+    "mocha": "3.2.0",
+    "npm-run-all": "^4.0.2",
+    "nyc": "^10.1.2",
+    "pre-commit": "^1.2.2",
+    "supertest": "3.0.0"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   },
   "pre-commit": "test"
 }
