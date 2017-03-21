@@ -1,6 +1,6 @@
 {
   "name": "koa-json-error",
-  "version": "3.1.0",
+  "version": "3.1.1-dev",
   "description": "Error handler for pure-JSON Koa apps",
   "keywords": [
     "koa",
@@ -15,13 +15,13 @@
   },
   "license": "MIT",
   "author": {
-    "name": "Jonathan Ong",
-    "email": "me@jongleberry.com",
-    "url": "http://jongleberry.com",
-    "twitter": "https://twitter.com/jongleberry"
+    "name": "Nicolás Fantone",
+    "email": "nfantone@gmail.com",
+    "url": "https://github.com/nfantone",
+    "twitter": "https://twitter.com/nfantone"
   },
   "contributors": [
-    "Nicolás Fantone <nfantone@gmail.com> (https://github.com/nfantone)"
+    "Jonathan Ong <me@jongleberry.com> (http://jongleberry.com)"
   ],
   "files": [
     "index.js"
