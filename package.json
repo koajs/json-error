@@ -1,6 +1,6 @@
 {
   "name": "koa-json-error",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "Error handler for pure-JSON Koa apps",
   "keywords": [
     "koa",
@@ -24,7 +24,8 @@
     "Jonathan Ong <me@jongleberry.com> (http://jongleberry.com)"
   ],
   "files": [
-    "index.js"
+    "index.js",
+    "lib/"
   ],
   "main": "index.js",
   "repository": "koajs/json-error",
