@@ -73,6 +73,15 @@ app.use(error({
 }));
 ```
 
+Usually in the production environment, when an application error occurs, the error message should not be displayed, but redirected to the error page
+
+```js
+let app = new Koa();
+app.use(error({
+    redirect: '/error'
+}));
+```
+
 See section below.
 
 ### Advanced usage
@@ -134,6 +143,19 @@ app.use(error(options));
 ```
 
 > Modifying the error inside the `*format` functions will mutate the original object. Be aware of that if any other Koa middleware runs after this one.
+
+#### `options.redirect (String)`
+Runs inmediatly after `options.redirect`. When an error occurs, the error will be handled according to the route you filled in.
+
+For example,
+
+```js
+'use strict';
+let app = new Koa();
+app.use(error({
+    redirect: '/error'
+}));
+```
 
 [npm-image]: https://img.shields.io/npm/v/koa-json-error.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/koa-json-error
