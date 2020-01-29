@@ -201,6 +201,30 @@ describe('with custom options', () => {
         return done();
       });
   });
+
+  it('should redirect when pass redirect options', done => {
+    const options = {
+      redirect: '/error'
+    };
+
+    const app = new Koa();
+
+    app.use(error(options));
+    app.use(() => {
+      let err = new Error('boom');
+      err.statusCode = 422;
+      err.customEnumerableField = 'fatal';
+      throw err;
+    });
+
+    request(app.listen())
+      .get('/')
+      .expect(422, (err, res) => {
+        assert.equal(res.header.location, '/error');
+        assert.equal(res.status, 302);
+        return done()
+      });
+  });
 });
 
 describe('with a format function as options', () => {
